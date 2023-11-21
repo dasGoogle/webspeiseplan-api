@@ -1,6 +1,6 @@
 import { HTTPClient, CachedHTTPClient } from "./cachedHTTPClient";
 
-class MenuItem {
+class Meal {
   name: string;
   studentPrice: number;
   guestPrice: number;
@@ -302,7 +302,7 @@ export class MensaApi {
     throw new Error("Feature not found");
   }
 
-  async getMensaMenu(mensa: string, language = "en"): Promise<MenuItem[]> {
+  async getMensaMenu(mensa: string, language = "en"): Promise<Meal[]> {
     const mensaId = await this.getMensaId(mensa);
     const languageId = (await this.getLanguageForCode(language)).id;
     const url = this.getURLForModel("menu", {
@@ -311,7 +311,7 @@ export class MensaApi {
     });
     const data: MealAPIRespose = await this.client.getJSON<MealAPIRespose>(url);
     const content = data.content;
-    const meals: MenuItem[] = [];
+    const meals: Meal[] = [];
     for (const plan of content) {
       const isEvening = plan.speiseplanAdvanced.titel.includes("Abend");
       for (const meal of plan.speiseplanGerichtData) {
@@ -358,7 +358,7 @@ export class MensaApi {
           }
         }
 
-        const menuItem = new MenuItem(
+        const menuItem = new Meal(
           meal.speiseplanAdvancedGericht.gerichtname,
           meal.zusatzinformationen.mitarbeiterpreisDecimal2,
           meal.zusatzinformationen.gaestepreisDecimal2,
