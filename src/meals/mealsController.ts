@@ -15,6 +15,14 @@ const api = new MensaApi();
 
 @Route("meals")
 export class MealController extends Controller {
+  /**
+   * Retrieves all meals available at a location that match the given filters. The meals contain details on prices, allgergens, etc.
+   * @param location The name of the location. This is matched ignoring whitespace and capitalization.
+   * @param date The date for which to retrieve meals. Format: YYYY-MM-DD
+   * @param evening Whether to retrieve evening meals or not. If not specified, all meals are returned.
+   * @param lang The language in which to return the meals. Currently supported: en, de
+   * @returns
+   */
   @Get("{location}")
   public async getMeals(
     @Path() location: string,

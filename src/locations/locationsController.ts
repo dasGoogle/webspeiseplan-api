@@ -15,6 +15,10 @@ const api = new MensaApi();
 
 @Route("locations")
 export class LocationController extends Controller {
+  /**
+   * Retrieve all locations available at the API
+   * @returns a list of all locations including their name and ID
+   */
   @Get()
   public async getLocations(): Promise<Location[]> {
     const locations: Location[] = await api.getLocations();

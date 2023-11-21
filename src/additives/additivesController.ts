@@ -15,6 +15,12 @@ const api = new MensaApi();
 
 @Route("additives")
 export class AdditivesController extends Controller {
+  /**
+   * Retrieve a list of all additives available at a location
+   * @param location The location for which to retrieve additives. This is matched ignoring whitespace and capitalization.
+   * @param lang The language in which to return the additives. Currently supported: en, de
+   * @returns A list of additives including their abbreviations
+   */
   @Get("{location}")
   public async getAllergens(
     @Path() location: string,

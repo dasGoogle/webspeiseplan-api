@@ -19,7 +19,9 @@ app.use(json());
 
 RegisterRoutes(app);
 
-// ...
+app.get("/", (req, res) => {
+  res.redirect("/docs");
+});
 
 app.use("/docs", swaggerUi.serve, async (_req: ExRequest, res: ExResponse) => {
   return res.send(
