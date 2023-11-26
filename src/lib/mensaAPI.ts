@@ -242,7 +242,7 @@ export class MensaApi {
     const allergens = await this.getAllergensResponse(mensaId, languageId);
     for (const allergen of allergens.content) {
       if (allergen.allergeneID === id) {
-        return new Allergen(allergen.name, allergen.kuerzel);
+        return new Allergen(allergen.name.trim(), allergen.kuerzel.trim());
       }
     }
     throw new Error(
@@ -270,7 +270,7 @@ export class MensaApi {
     const additives = await this.getAdditivesResponse(mensaId, languageId);
     for (const additive of additives.content) {
       if (additive.zusatzstoffeID === id) {
-        return new Additive(additive.name, additive.kuerzel);
+        return new Additive(additive.name.trim(), additive.kuerzel.trim());
       }
     }
     throw new Error("Additive not found");
@@ -296,7 +296,7 @@ export class MensaApi {
     const features = await this.getFeaturesResponse(mensaId, languageId);
     for (const feature of features.content) {
       if (feature.gerichtmerkmalID === id) {
-        return new Feature(feature.name, feature.kuerzel);
+        return new Feature(feature.name.trim(), feature.kuerzel.trim());
       }
     }
     throw new Error("Feature not found");
@@ -359,7 +359,7 @@ export class MensaApi {
         }
 
         const menuItem = new Meal(
-          meal.speiseplanAdvancedGericht.gerichtname,
+          meal.speiseplanAdvancedGericht.gerichtname.trim(),
           meal.zusatzinformationen.mitarbeiterpreisDecimal2,
           meal.zusatzinformationen.gaestepreisDecimal2,
           new Date(meal.speiseplanAdvancedGericht.datum),
