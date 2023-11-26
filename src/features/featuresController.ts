@@ -22,7 +22,7 @@ export class FeaturesController extends Controller {
    * @returns A list of features including their abbreviations
    */
   @Get("{location}")
-  public async getAllergens(
+  public async getFeatures(
     @Path() location: string,
     @Query() lang = "en"
   ): Promise<Feature[]> {

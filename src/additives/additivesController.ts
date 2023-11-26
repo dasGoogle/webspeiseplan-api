@@ -22,7 +22,7 @@ export class AdditivesController extends Controller {
    * @returns A list of additives including their abbreviations
    */
   @Get("{location}")
-  public async getAllergens(
+  public async getAdditives(
     @Path() location: string,
     @Query() lang = "en"
   ): Promise<Additive[]> {
