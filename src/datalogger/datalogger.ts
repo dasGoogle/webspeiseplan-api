@@ -65,7 +65,6 @@ export class DataLogger {
 
       // check if meal has changed
       if (!meal.isEqualTo(Meal.fromJSON(storedMealLog.meal))) {
-        // move old file to archive in the format /YYYY-MM-DD/mealId/<date>.json
         const archivePath = path.join(
           this.storagePath,
           locationName,
