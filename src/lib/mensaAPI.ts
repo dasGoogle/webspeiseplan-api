@@ -1,6 +1,7 @@
 import { HTTPClient, CachedHTTPClient } from "./cachedHTTPClient";
+import { Meal as MealInterface } from "../meals/meal";
 
-class Meal {
+export class Meal {
   name: string;
   studentPrice: number;
   guestPrice: number;
@@ -9,6 +10,7 @@ class Meal {
   additives: Additive[];
   features: Feature[];
   isEveningMeal = false;
+  id: number;
   constructor(
     name: string,
     studentPrice: number,
@@ -17,7 +19,8 @@ class Meal {
     allergens: Allergen[],
     additives: Additive[],
     features: Feature[],
-    isEveningMeal = false
+    isEveningMeal = false,
+    id: number
   ) {
     this.name = name;
     this.studentPrice = studentPrice;
@@ -27,6 +30,59 @@ class Meal {
     this.additives = additives;
     this.features = features;
     this.isEveningMeal = isEveningMeal;
+    this.id = id;
+  }
+
+  isEqualTo(other: Meal): boolean {
+    const basicEquality =
+      this.name === other.name &&
+      this.studentPrice === other.studentPrice &&
+      this.guestPrice === other.guestPrice &&
+      this.date.getTime() === other.date.getTime() &&
+      this.isEveningMeal === other.isEveningMeal &&
+      this.id === other.id;
+    const allergensEquality =
+      this.allergens.length === other.allergens.length &&
+      this.allergens.every((allergen) => {
+        return other.allergens.some((otherAllergen) => {
+          return allergen.name === otherAllergen.name;
+        });
+      });
+    const additivesEquality =
+      this.additives.length === other.additives.length &&
+      this.additives.every((additive) => {
+        return other.additives.some((otherAdditive) => {
+          return additive.name === otherAdditive.name;
+        });
+      });
+    const featuresEquality =
+      this.features.length === other.features.length &&
+      this.features.every((feature) => {
+        return other.features.some((otherFeature) => {
+          return feature.name === otherFeature.name;
+        });
+      });
+    return (
+      basicEquality &&
+      allergensEquality &&
+      additivesEquality &&
+      featuresEquality
+    );
+  }
+
+  static fromJSON(json: MealInterface): Meal {
+    const meal = new Meal(
+      json.name,
+      json.studentPrice,
+      json.guestPrice,
+      new Date(json.date),
+      json.allergens,
+      json.additives,
+      json.features,
+      json.isEveningMeal,
+      json.id
+    );
+    return meal;
   }
 }
 
@@ -373,7 +429,8 @@ export class MensaApi {
           allergens,
           additives,
           gerichtmerkmale,
-          isEvening
+          isEvening,
+          meal.speiseplanAdvancedGericht.id
         );
 
         meals.push(menuItem);

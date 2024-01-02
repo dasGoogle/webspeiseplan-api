@@ -35,4 +35,8 @@ export interface Meal {
    * Whether the meal is an evening meal
    */
   isEveningMeal: boolean;
+  /**
+   * The id of the meal
+   */
+  id: number;
 }
