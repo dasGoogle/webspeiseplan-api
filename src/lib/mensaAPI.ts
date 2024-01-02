@@ -93,6 +93,7 @@ type MealAPIRespose = {
           zusatzinformationen: {
             mitarbeiterpreisDecimal2: number;
             gaestepreisDecimal2: number;
+            gerichtnameAlternative: string;
           };
           allergeneIds: string;
           zusatzstoffeIds: string;
@@ -358,8 +359,14 @@ export class MensaApi {
           }
         }
 
+        // Get the english meal name if requested since the API provides the english name in a different field and ignores the language parameter
+        const mealName =
+          language === "en"
+            ? meal.zusatzinformationen.gerichtnameAlternative
+            : meal.speiseplanAdvancedGericht.gerichtname;
+
         const menuItem = new Meal(
-          meal.speiseplanAdvancedGericht.gerichtname.trim(),
+          mealName.trim(),
           meal.zusatzinformationen.mitarbeiterpreisDecimal2,
           meal.zusatzinformationen.gaestepreisDecimal2,
           new Date(meal.speiseplanAdvancedGericht.datum),
