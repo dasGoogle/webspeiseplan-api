@@ -1,218 +1,23 @@
 import { HTTPClient, CachedHTTPClient } from "./cachedHTTPClient";
-import { Meal as MealInterface } from "../meals/meal";
 
-export class Meal {
-  name: string;
-  studentPrice: number;
-  guestPrice: number;
-  date: Date;
-  allergens: Allergen[];
-  additives: Additive[];
-  features: Feature[];
-  isEveningMeal = false;
-  id: number;
-  constructor(
-    name: string,
-    studentPrice: number,
-    guestPrice: number,
-    date: Date,
-    allergens: Allergen[],
-    additives: Additive[],
-    features: Feature[],
-    isEveningMeal = false,
-    id: number
-  ) {
-    this.name = name;
-    this.studentPrice = studentPrice;
-    this.guestPrice = guestPrice;
-    this.date = date;
-    this.allergens = allergens;
-    this.additives = additives;
-    this.features = features;
-    this.isEveningMeal = isEveningMeal;
-    this.id = id;
-  }
+import {
+  AdditiveAPIResponse,
+  AllergenAPIResponse,
+  FeatureAPIResponse,
+  LanguageAPIResponse,
+  LocationAPIResponse,
+  MealAPIRespose,
+} from "./webspeiseplanTypes";
 
-  isEqualTo(other: Meal): boolean {
-    const basicEquality =
-      this.name === other.name &&
-      this.studentPrice === other.studentPrice &&
-      this.guestPrice === other.guestPrice &&
-      this.date.getTime() === other.date.getTime() &&
-      this.isEveningMeal === other.isEveningMeal &&
-      this.id === other.id;
-    const allergensEquality =
-      this.allergens.length === other.allergens.length &&
-      this.allergens.every((allergen) => {
-        return other.allergens.some((otherAllergen) => {
-          return allergen.name === otherAllergen.name;
-        });
-      });
-    const additivesEquality =
-      this.additives.length === other.additives.length &&
-      this.additives.every((additive) => {
-        return other.additives.some((otherAdditive) => {
-          return additive.name === otherAdditive.name;
-        });
-      });
-    const featuresEquality =
-      this.features.length === other.features.length &&
-      this.features.every((feature) => {
-        return other.features.some((otherFeature) => {
-          return feature.name === otherFeature.name;
-        });
-      });
-    return (
-      basicEquality &&
-      allergensEquality &&
-      additivesEquality &&
-      featuresEquality
-    );
-  }
-
-  static fromJSON(json: MealInterface): Meal {
-    const meal = new Meal(
-      json.name,
-      json.studentPrice,
-      json.guestPrice,
-      new Date(json.date),
-      json.allergens,
-      json.additives,
-      json.features,
-      json.isEveningMeal,
-      json.id
-    );
-    return meal;
-  }
-}
-
-class Allergen {
-  name: string;
-  abbreviation: string;
-  constructor(name: string, abbreviation: string) {
-    this.name = name;
-    this.abbreviation = abbreviation;
-  }
-}
-
-class Additive {
-  name: string;
-  abbreviation: string;
-  constructor(name: string, abbreviation: string) {
-    this.name = name;
-    this.abbreviation = abbreviation;
-  }
-}
-
-class Feature {
-  name: string;
-  abbreviation: string;
-  constructor(name: string, abbreviation: string) {
-    this.name = name;
-    this.abbreviation = abbreviation;
-  }
-}
-
-class Location {
-  name: string;
-  id: number;
-  constructor(name: string, id: number) {
-    this.name = name;
-    this.id = id;
-  }
-}
-
-class Language {
-  name: string;
-  code: string;
-  id: number;
-  constructor(id: number, name: string, code: string) {
-    this.id = id;
-    this.name = name;
-    this.code = code;
-  }
-}
-
-type MealAPIRespose = {
-  success: boolean;
-  content: [
-    {
-      speiseplanAdvanced: { titel: string };
-      speiseplanGerichtData: [
-        {
-          speiseplanAdvancedGericht: {
-            id: number;
-            aktiv: boolean;
-            datum: string;
-            gerichtname: string;
-          };
-          zusatzinformationen: {
-            mitarbeiterpreisDecimal2: number;
-            gaestepreisDecimal2: number;
-            gerichtnameAlternative: string;
-          };
-          allergeneIds: string;
-          zusatzstoffeIds: string;
-          gerichtmerkmaleIds: string;
-        }
-      ];
-    }
-  ];
-};
-
-type AllergenAPIResponse = {
-  success: boolean;
-  content: [
-    {
-      name: string;
-      kuerzel: string;
-      allergeneID: number;
-    }
-  ];
-};
-
-type AdditiveAPIResponse = {
-  success: boolean;
-  content: [
-    {
-      zusatzstoffeID: number;
-      name: string;
-      kuerzel: string;
-    }
-  ];
-};
-
-type FeatureAPIResponse = {
-  success: boolean;
-  content: [
-    {
-      gerichtmerkmalID: number;
-      name: string;
-      kuerzel: string;
-    }
-  ];
-};
-
-type LocationAPIResponse = {
-  success: boolean;
-  content: [
-    {
-      id: number;
-      name: string;
-    }
-  ];
-};
-
-type LanguageAPIResponse = {
-  success: boolean;
-  content: [
-    {
-      id: number;
-      name: string;
-      code: string;
-    }
-  ];
-};
+import {
+  Additive,
+  Allergen,
+  Feature,
+  Meal,
+  NutritionInformation,
+  Language,
+  Location,
+} from "./mensaAPITypes";
 
 type RequestOptions = {
   location?: number;
@@ -415,6 +220,17 @@ export class MensaApi {
           }
         }
 
+        const nutritionInformation = new NutritionInformation(
+          meal.zusatzinformationen.nwkjInteger,
+          meal.zusatzinformationen.nwkcalInteger,
+          meal.zusatzinformationen.nwfettDecimal1,
+          meal.zusatzinformationen.nwfettsaeurenDecimal1,
+          meal.zusatzinformationen.nwkohlehydrateDecimal1,
+          meal.zusatzinformationen.nwzuckerDecimal1,
+          meal.zusatzinformationen.nweiweissDecimal1,
+          meal.zusatzinformationen.nwsalzDecimal1
+        );
+
         // Get the english meal name if requested since the API provides the english name in a different field and ignores the language parameter
         const mealName =
           language === "en"
@@ -430,7 +246,8 @@ export class MensaApi {
           additives,
           gerichtmerkmale,
           isEvening,
-          meal.speiseplanAdvancedGericht.id
+          meal.speiseplanAdvancedGericht.id,
+          nutritionInformation
         );
 
         meals.push(menuItem);

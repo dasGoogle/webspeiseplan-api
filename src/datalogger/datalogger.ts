@@ -2,7 +2,7 @@ import { MensaApi } from "../lib/mensaAPI";
 import * as path from "path";
 import * as fs from "fs/promises";
 import { existsSync } from "fs";
-import { Meal } from "../lib/mensaAPI";
+import { Meal } from "../lib/mensaAPITypes";
 
 type MealLog = {
   firstSaved: Date;
