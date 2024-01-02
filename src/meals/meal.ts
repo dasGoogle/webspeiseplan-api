@@ -39,4 +39,43 @@ export interface Meal {
    * The id of the meal
    */
   id: number;
+  /**
+   * The nutrition information of the meal
+   */
+  nutritionInformation: NutritionInformation;
+}
+
+export interface NutritionInformation {
+  /**
+   * The energy of the meal in kJ
+   */
+  kj: number;
+  /**
+   * The energy of the meal in kcal
+   */
+  kcal: number;
+  /**
+   * The fat of the meal in g
+   */
+  fat: number;
+  /**
+   * The saturated fat of the meal in g
+   */
+  saturatedFat: number;
+  /**
+   * The carbohydrates of the meal in g
+   */
+  carbohydrates: number;
+  /**
+   * The sugar of the meal in g
+   */
+  sugar: number;
+  /**
+   * The protein of the meal in g
+   */
+  protein: number;
+  /**
+   * The salt of the meal in g
+   */
+  salt: number;
 }
