@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Path,
-  Post,
-  Query,
-  Route,
-  SuccessResponse,
-} from "tsoa";
+import { Controller, Get, Path, Query, Route } from "tsoa";
 import { Meal } from "./meal";
 
 import { MensaApi } from "../lib/mensaAPI";

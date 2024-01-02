@@ -422,5 +422,3 @@ export class MensaApi {
     return features;
   }
 }
-
-const mensaApi = new MensaApi();
