@@ -3,6 +3,11 @@ services:
   app:
     build: .
     restart: unless-stopped
+    volumes:
+      - ./data:/data
+    environment:
+      - LOGGING_INTERVAL_HOURS=1
+      - LOGGING_PATH=/data
     ports:
       # This is the port the app is listening on
       - "127.0.0.1:3000:3000"
