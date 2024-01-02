@@ -6,6 +6,7 @@ import express, {
 } from "express";
 import { RegisterRoutes } from "../build/routes";
 import swaggerUi from "swagger-ui-express";
+import cors from "cors";
 
 export const app = express();
 
@@ -16,6 +17,9 @@ app.use(
   })
 );
 app.use(json());
+
+app.use(cors());
+app.options("*", cors());
 
 RegisterRoutes(app);
 
