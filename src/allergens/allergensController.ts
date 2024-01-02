@@ -1,13 +1,4 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Path,
-  Post,
-  Query,
-  Route,
-  SuccessResponse,
-} from "tsoa";
+import { Controller, Get, Path, Query, Route } from "tsoa";
 
 import { MensaApi } from "../lib/mensaAPI";
 import { Allergen } from "./allergen";
