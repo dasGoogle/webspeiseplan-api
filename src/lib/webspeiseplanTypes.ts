@@ -3,7 +3,7 @@ export type MealAPIRespose = {
   content: [
     {
       speiseplanAdvanced: { titel: string };
-      speiseplanGerichtData: [
+      speiseplanGerichtData?: [
         {
           speiseplanAdvancedGericht: {
             id: number;
