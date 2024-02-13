@@ -176,8 +176,7 @@ export class MensaApi {
     const meals: Meal[] = [];
     for (const plan of content) {
       const isEvening = plan.speiseplanAdvanced.titel.includes("Abend");
-      if (!plan.speiseplanGerichtData)
-        continue;
+      if (!plan.speiseplanGerichtData) continue;
       for (const meal of plan.speiseplanGerichtData) {
         if (meal.zusatzinformationen.mitarbeiterpreisDecimal2 === 0) {
           continue;
