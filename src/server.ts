@@ -4,7 +4,7 @@ import { DataLogger } from "./datalogger/datalogger";
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
-  console.log(`Example app listening at http://localhost:${port}`);
+  console.log(`API server listening at http://localhost:${port}`);
   const LOGGING_INTERVAL_HOURS = process.env.LOGGING_INTERVAL_HOURS;
   const LOGGING_PATH = process.env.LOGGING_PATH;
   if (LOGGING_INTERVAL_HOURS !== undefined) {

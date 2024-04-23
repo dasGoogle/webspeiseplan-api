@@ -30,7 +30,6 @@ export class MealController extends Controller {
       // Filter meals by matching date
       meals = meals.filter((meal) => {
         const mealDate = new Date(meal.date);
-        console.log(mealDate.toISOString());
         const queryDate = new Date(date);
         return (
           mealDate.getFullYear() === queryDate.getFullYear() &&
