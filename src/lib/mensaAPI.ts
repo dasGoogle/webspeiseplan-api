@@ -238,6 +238,10 @@ export class MensaApi {
             ? meal.zusatzinformationen.gerichtnameAlternative
             : meal.speiseplanAdvancedGericht.gerichtname;
 
+        if (!mealName) {
+          continue;
+        }
+
         const menuItem = new Meal(
           mealName.trim(),
           meal.zusatzinformationen.mitarbeiterpreisDecimal2,
