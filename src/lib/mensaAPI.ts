@@ -255,6 +255,10 @@ export class MensaApi {
           nutritionInformation
         );
 
+        if (menuItem.guestPrice === null || menuItem.guestPrice === null) {
+          continue;
+        }
+
         meals.push(menuItem);
       }
     }
