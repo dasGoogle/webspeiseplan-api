@@ -180,7 +180,11 @@ export class MensaApi {
       if (plan.speiseplanAdvanced.titel.includes("Automat")) continue;
       if (!plan.speiseplanGerichtData) continue;
       for (const meal of plan.speiseplanGerichtData) {
-        if (meal.zusatzinformationen.mitarbeiterpreisDecimal2 === 0) {
+        if (
+          !meal.zusatzinformationen ||
+          !meal.zusatzinformationen.mitarbeiterpreisDecimal2 ||
+          meal.zusatzinformationen.mitarbeiterpreisDecimal2 === 0
+        ) {
           continue;
         }
         // Construct proper object from API Response
