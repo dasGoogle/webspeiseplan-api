@@ -93,7 +93,6 @@ export class MensaApi {
     const locations = data.content
       .filter((location) => location.isPublic)
       .map((location) => {
-        console.log(location);
         return new Location(location.name, location.id);
       });
     return locations;
