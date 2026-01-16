@@ -12,6 +12,10 @@ export interface Meal {
    */
   studentPrice: number;
   /**
+   * The price of the meal for employees
+   */
+  employeePrice: number;
+  /**
    * The price of the meal for guests
    */
   guestPrice: number;

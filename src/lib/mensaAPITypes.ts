@@ -6,6 +6,7 @@ import {
 export class Meal {
   name: string;
   studentPrice: number;
+  employeePrice: number;
   guestPrice: number;
   date: Date;
   allergens: Allergen[];
@@ -17,6 +18,7 @@ export class Meal {
   constructor(
     name: string,
     studentPrice: number,
+    employeePrice: number,
     guestPrice: number,
     date: Date,
     allergens: Allergen[],
@@ -28,6 +30,7 @@ export class Meal {
   ) {
     this.name = name;
     this.studentPrice = studentPrice;
+    this.employeePrice = employeePrice;
     this.guestPrice = guestPrice;
     this.date = date;
     this.allergens = allergens;
@@ -42,6 +45,7 @@ export class Meal {
     const basicEquality =
       this.name === other.name &&
       this.studentPrice === other.studentPrice &&
+      this.employeePrice === other.employeePrice &&
       this.guestPrice === other.guestPrice &&
       this.date.getTime() === other.date.getTime() &&
       this.isEveningMeal === other.isEveningMeal &&
@@ -79,6 +83,7 @@ export class Meal {
     const meal = new Meal(
       json.name,
       json.studentPrice,
+      json.employeePrice,
       json.guestPrice,
       new Date(json.date),
       json.allergens,

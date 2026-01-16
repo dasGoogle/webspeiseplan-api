@@ -14,6 +14,7 @@ export type MealAPIRespose = {
           zusatzinformationen: {
             mitarbeiterpreisDecimal2: number;
             gaestepreisDecimal2: number;
+            price3Decimal2: number;
             gerichtnameAlternative: string;
             nwkjInteger: number;
             nwkcalInteger: number;

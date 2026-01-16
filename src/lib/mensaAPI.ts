@@ -252,6 +252,7 @@ export class MensaApi {
           mealName.trim(),
           meal.zusatzinformationen.mitarbeiterpreisDecimal2,
           meal.zusatzinformationen.gaestepreisDecimal2,
+          meal.zusatzinformationen.price3Decimal2,
           new Date(meal.speiseplanAdvancedGericht.datum),
           allergens,
           additives,
