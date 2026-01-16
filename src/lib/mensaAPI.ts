@@ -90,9 +90,12 @@ export class MensaApi {
   async getLocations(): Promise<Location[]> {
     const url = this.getURLForModel("location");
     const data = await this.client.getJSON<LocationAPIResponse>(url);
-    const locations = data.content.map((location) => {
-      return new Location(location.name, location.id);
-    });
+    const locations = data.content
+      .filter((location) => location.isPublic)
+      .map((location) => {
+        console.log(location);
+        return new Location(location.name, location.id);
+      });
     return locations;
   }
 

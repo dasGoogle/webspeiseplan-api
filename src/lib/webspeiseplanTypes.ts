@@ -74,6 +74,7 @@ export type LocationAPIResponse = {
     {
       id: number;
       name: string;
+      isPublic: boolean;
     }
   ];
 };
