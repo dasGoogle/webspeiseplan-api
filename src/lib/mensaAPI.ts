@@ -158,7 +158,10 @@ export class MensaApi {
     const features = await this.getFeaturesResponse(mensaId, languageId);
     for (const feature of features.content) {
       if (feature.gerichtmerkmalID === id) {
-        return new Feature(feature.name.trim(), feature.kuerzel.trim());
+        return new Feature(
+          feature.name.trim(),
+          (feature.kuerzel || feature.nameAlternative || "").trim()
+        );
       }
     }
     throw new Error("Feature not found");
@@ -307,7 +310,11 @@ export class MensaApi {
       languageId
     );
     const features = featuresResponse.content.map(
-      (feature) => new Feature(feature.name, feature.kuerzel)
+      (feature) =>
+        new Feature(
+          feature.name.trim(),
+          (feature.kuerzel || feature.nameAlternative || "").trim()
+        )
     );
     return features;
   }

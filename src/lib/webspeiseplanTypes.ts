@@ -62,7 +62,8 @@ export type FeatureAPIResponse = {
     {
       gerichtmerkmalID: number;
       name: string;
-      kuerzel: string;
+      kuerzel?: string;
+      nameAlternative?: string;
     }
   ];
 };
